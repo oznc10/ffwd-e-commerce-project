@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getProductById } from "@/lib/products";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import AddToCartButton from "@/components/products/add-to-cart-button";
 
 // Next.js 16'da params bir Promise; async component ile await edilmeli
 export default async function ProductDetailPage({
@@ -94,10 +94,8 @@ export default async function ProductDetailPage({
             </p>
           )}
 
-          {/* Sepete Ekle — Faz 5'te aktif edilecek */}
-          <Button size="lg" disabled className="w-full sm:w-auto">
-            {isOutOfStock ? "Stokta Yok" : "Yakında"}
-          </Button>
+          {/* Sepete Ekle */}
+          <AddToCartButton productId={product.id} stock={product.stock} />
         </div>
       </div>
     </main>

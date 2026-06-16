@@ -1,9 +1,10 @@
 // Site üst navigasyon çubuğu — server component, session durumuna göre içerik gösterir
 import Link from "next/link";
-import { Zap, ShoppingCart } from "lucide-react";
+import { Zap } from "lucide-react";
 import { getSession, type SessionData } from "@/lib/session";
 import { Button } from "@/components/ui/button";
 import { LogoutButton } from "@/components/auth/logout-button";
+import CartIcon from "@/components/layout/cart-icon";
 
 export default async function Header() {
   const session = await getSession();
@@ -38,14 +39,8 @@ export default async function Header() {
 
         {/* Sağ: Sepet + Kullanıcı alanı */}
         <div className="flex items-center gap-2">
-          {/* Sepet ikonu — şimdilik statik */}
-          <Link
-            href="/cart"
-            aria-label="Sepet"
-            className="rounded-md p-1.5 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
-          >
-            <ShoppingCart className="size-5" />
-          </Link>
+          {/* Sepet ikonu — item sayısını canlı gösterir */}
+          <CartIcon />
 
           {/* Oturum durumuna göre kullanıcı alanı */}
           {session.isLoggedIn && session.user ? (
