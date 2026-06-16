@@ -64,6 +64,12 @@ function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
       >
         {user.name}
       </Link>
+      <Link
+        href="/orders"
+        className="hidden sm:block rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+      >
+        Siparişlerim
+      </Link>
       <LogoutButton />
     </div>
   );

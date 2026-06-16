@@ -51,6 +51,9 @@ export interface OrderItem {
   product_id: number;
   quantity: number;
   unit_price: number;
+  // products JOIN'inden gelen opsiyonel alanlar
+  product_name?: string;
+  product_image?: string;
 }
 
 // Sepet öğesi - sadece frontend state için kullanılır
