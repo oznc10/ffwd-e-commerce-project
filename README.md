@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechStore — E-Ticaret Uygulaması
 
-## Getting Started
+## 🚀 Canlı Demo
 
-First, run the development server:
+[Canlı Demo](https://ffwd-e-commerce-project.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📹 Proje Tanıtım Videosu
+
+[Video Linki](VIDEO_URL_BURAYA)
+
+## 📖 Proje Hakkında
+
+MultiAcademy React Foundations bootcamp mezuniyet projesi.
+Next.js ile geliştirilmiş tam işlevli bir e-ticaret uygulaması.
+Kullanıcı kaydı, giriş, ürün listeleme, sepet ve sipariş yönetimi içerir.
+
+## ✨ Özellikler
+
+- Kullanıcı kayıt ve giriş sistemi (iron-session)
+- Ürün listeleme, arama, filtreleme ve sıralama
+- Alışveriş sepeti (localStorage ile kalıcı)
+- Checkout ve simüle ödeme sistemi
+- Sipariş geçmişi ve detay sayfaları
+- Korumalı sayfalar (middleware)
+- Responsive tasarım
+
+## 🛠️ Kullanılan Teknolojiler
+
+- Next.js 14+ (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- SQLite (better-sqlite3)
+- iron-session
+- bcryptjs
+- Zod
+- Vercel (deployment)
+
+## 🗂️ Proje Yapısı
+
+```
+src/
+├── app/          # Next.js App Router sayfaları
+├── components/   # Yeniden kullanılabilir componentler
+├── lib/          # Veritabanı, session, server actions
+├── types/        # TypeScript tip tanımları
+├── hooks/        # Custom React hooks
+└── context/      # Context providers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Kurulum
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Gereksinimler:** Node.js 18+
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/oznc10/ffwd-e-commerce-project.git
+cd ffwd-e-commerce-project
+npm install
+npm run dev
+```
 
-## Learn More
+Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini aç.
 
-To learn more about Next.js, take a look at the following resources:
+## 👤 Demo Hesap
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Kayıt ol sayfasından yeni hesap oluşturabilirsiniz: `/register`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Test için örnek bilgiler:
 
-## Deploy on Vercel
+- **Email:** test@test.com
+- **Şifre:** 123456
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Lisans
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Bu proje MultiAcademy React Foundations mezuniyet projesi olarak geliştirilmiştir.
