@@ -82,6 +82,17 @@ export async function createOrderAction(
   const db = getDb();
   const userId = session.user.id;
 
+  // Oturum token'ı geçerli olsa bile kullanıcı silinmiş olabilir
+  const userExists = db
+    .prepare("SELECT id FROM users WHERE id = ?")
+    .get(userId);
+  if (!userExists) {
+    return {
+      success: false,
+      error: "Oturumunuz sona erdi, lütfen tekrar giriş yapın.",
+    };
+  }
+
   try {
     // Transaction: stok kontrolü → sipariş oluşturma → stok güncelleme
     const getProductStmt = db.prepare(
