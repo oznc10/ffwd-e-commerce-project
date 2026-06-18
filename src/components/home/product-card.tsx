@@ -1,4 +1,6 @@
 // Tek ürün kartı — ürün listesi ve öne çıkan ürünler bölümünde kullanılır
+// React.memo: props değişmediğinde gereksiz yeniden render önlenir
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ProductWithCategory } from "@/types";
@@ -22,7 +24,7 @@ function formatPrice(price: number): string {
   );
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+const ProductCard = React.memo(function ProductCard({ product }: ProductCardProps) {
   return (
     <Card className="flex flex-col overflow-hidden p-0 gap-0">
       {/* Ürün görseli */}
@@ -69,4 +71,6 @@ export default function ProductCard({ product }: ProductCardProps) {
       </CardFooter>
     </Card>
   );
-}
+});
+
+export default ProductCard;

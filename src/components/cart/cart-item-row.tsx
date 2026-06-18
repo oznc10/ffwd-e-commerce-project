@@ -1,6 +1,8 @@
 "use client";
 
 // Sepet sayfasındaki tek bir ürün satırı
+// React.memo: aynı ürün/miktar geldiğinde yeniden render önlenir
+import React from "react";
 import Image from "next/image";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import type { ProductWithCategory } from "@/types";
@@ -20,7 +22,7 @@ function formatPrice(price: number): string {
   );
 }
 
-export default function CartItemRow({ product, quantity }: CartItemRowProps) {
+const CartItemRow = React.memo(function CartItemRow({ product, quantity }: CartItemRowProps) {
   const { updateQuantity, removeFromCart } = useCart();
 
   return (
@@ -91,4 +93,6 @@ export default function CartItemRow({ product, quantity }: CartItemRowProps) {
       </div>
     </div>
   );
-}
+});
+
+export default CartItemRow;

@@ -1,5 +1,11 @@
 // Ürün listesi sayfası — server component, filtre ve sayfalama destekli
+import type { Metadata } from "next";
 import { getAllCategories, getProducts } from "@/lib/products";
+
+export const metadata: Metadata = {
+  title: "Tüm Ürünler | TechStore",
+  description: "MacBook, iPhone, aksesuar ve daha fazlası",
+};
 import type { GetProductsOptions } from "@/lib/products";
 import SearchAndFilters from "@/components/products/search-and-filters";
 import ProductGrid from "@/components/products/product-grid";

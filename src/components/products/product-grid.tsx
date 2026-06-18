@@ -1,4 +1,6 @@
-// Ürün grid'i — server component, ProductCard'ları listeler ya da boş durum gösterir
+// Ürün grid'i — ProductCard'ları listeler ya da boş durum gösterir
+// React.memo: ürün listesi değişmediğinde yeniden render önlenir
+import React from "react";
 import Link from "next/link";
 import { PackageSearch } from "lucide-react";
 import type { ProductWithCategory } from "@/types";
@@ -8,7 +10,7 @@ interface ProductGridProps {
   products: ProductWithCategory[];
 }
 
-export default function ProductGrid({ products }: ProductGridProps) {
+const ProductGrid = React.memo(function ProductGrid({ products }: ProductGridProps) {
   // Ürün bulunamadı durumu
   if (products.length === 0) {
     return (
@@ -39,4 +41,6 @@ export default function ProductGrid({ products }: ProductGridProps) {
       ))}
     </div>
   );
-}
+});
+
+export default ProductGrid;

@@ -1,5 +1,11 @@
 // Ana sayfa — server component, veritabanından veri çeker
+import type { Metadata } from "next";
 import { getFeaturedProducts, getAllCategories } from "@/lib/products";
+
+export const metadata: Metadata = {
+  title: "TechStore | Teknolojinin En İyileri",
+  description: "En güncel teknoloji ürünleri tek bir yerde",
+};
 import HeroSection from "@/components/home/hero-section";
 import CategoryCard from "@/components/home/category-card";
 import ProductCard from "@/components/home/product-card";

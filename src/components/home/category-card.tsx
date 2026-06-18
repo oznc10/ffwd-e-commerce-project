@@ -1,4 +1,6 @@
 // Tek kategori kartı — kategoriye tıklandığında filtreli ürün listesine gider
+// React.memo: props değişmediğinde gereksiz yeniden render önlenir
+import React from "react";
 import Link from "next/link";
 import type { Category } from "@/types";
 
@@ -20,7 +22,7 @@ interface CategoryCardProps {
   category: Category;
 }
 
-export default function CategoryCard({ category }: CategoryCardProps) {
+const CategoryCard = React.memo(function CategoryCard({ category }: CategoryCardProps) {
   return (
     <Link
       href={`/products?category=${category.slug}`}
@@ -42,4 +44,6 @@ export default function CategoryCard({ category }: CategoryCardProps) {
       </div>
     </Link>
   );
-}
+});
+
+export default CategoryCard;
