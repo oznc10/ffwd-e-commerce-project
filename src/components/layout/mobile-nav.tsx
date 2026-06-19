@@ -9,6 +9,8 @@ import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LogoutButton } from "@/components/auth/logout-button";
@@ -39,6 +41,10 @@ export default function MobileNav({ isLoggedIn, user }: MobileNavProps) {
       </SheetTrigger>
 
       <SheetContent side="right" className="w-72 p-0 pt-10">
+        <SheetHeader className="px-4 pb-2">
+          <SheetTitle>Menü</SheetTitle>
+        </SheetHeader>
+
         {/* Navigasyon linkleri */}
         <nav className="flex flex-col gap-1 px-4 pb-4">
           <Link
