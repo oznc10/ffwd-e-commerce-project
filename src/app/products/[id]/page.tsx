@@ -4,8 +4,17 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getProductById } from "@/lib/products";
+import { getSession } from "@/lib/session";
+import {
+  getProductReviews,
+  getProductRatingStats,
+  hasUserReviewed,
+} from "@/lib/actions/review";
 import { Badge } from "@/components/ui/badge";
 import AddToCartButton from "@/components/products/add-to-cart-button";
+import RatingSummary from "@/components/reviews/rating-summary";
+import ReviewForm from "@/components/reviews/review-form";
+import ReviewList from "@/components/reviews/review-list";
 
 // Next.js 16'da params bir Promise; async component ile await edilmeli
 export default async function ProductDetailPage({
@@ -21,7 +30,16 @@ export default async function ProductDetailPage({
     notFound();
   }
 
+  // Yorum verileri + oturum bilgisi paralel çekiliyor
+  const [ratingStats, reviews, session, alreadyReviewed] = await Promise.all([
+    getProductRatingStats(product.id),
+    getProductReviews(product.id),
+    getSession(),
+    hasUserReviewed(product.id),
+  ]);
+
   const isOutOfStock = product.stock === 0;
+  const isLoggedIn = session.isLoggedIn;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -65,6 +83,12 @@ export default async function ProductDetailPage({
             {formatPrice(product.price)}
           </p>
 
+          {/* Puan özeti */}
+          <RatingSummary
+            average={ratingStats.average}
+            count={ratingStats.count}
+          />
+
           {/* Stok durumu badge'i */}
           {isOutOfStock ? (
             <Badge variant="destructive" className="w-fit">
@@ -98,6 +122,40 @@ export default async function ProductDetailPage({
           <AddToCartButton productId={product.id} stock={product.stock} />
         </div>
       </div>
+
+      {/* Değerlendirmeler bölümü */}
+      <section className="mt-16 border-t border-border pt-10">
+        <h2 className="mb-6 text-xl font-bold tracking-tight">
+          Değerlendirmeler
+        </h2>
+
+        {/* Yorum formu veya bilgi mesajı */}
+        <div className="mb-8">
+          {isLoggedIn ? (
+            alreadyReviewed ? (
+              <p className="rounded-md bg-muted px-4 py-3 text-sm text-muted-foreground">
+                Bu ürüne zaten değerlendirme yaptınız.
+              </p>
+            ) : (
+              <ReviewForm productId={product.id} />
+            )
+          ) : (
+            <p className="rounded-md bg-muted px-4 py-3 text-sm text-muted-foreground">
+              Yorum yapmak için{" "}
+              <Link
+                href="/login"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                giriş yapın
+              </Link>
+              .
+            </p>
+          )}
+        </div>
+
+        {/* Yorum listesi */}
+        <ReviewList reviews={reviews} />
+      </section>
     </main>
   );
 }

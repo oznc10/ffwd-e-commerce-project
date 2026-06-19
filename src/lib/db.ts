@@ -76,6 +76,16 @@ const SCHEMA = `
     quantity   INTEGER NOT NULL,
     unit_price REAL    NOT NULL
   );
+
+  CREATE TABLE IF NOT EXISTS reviews (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER NOT NULL REFERENCES products(id),
+    user_id    INTEGER NOT NULL REFERENCES users(id),
+    rating     INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    comment    TEXT    NOT NULL,
+    created_at TEXT    NOT NULL DEFAULT (datetime('now')),
+    UNIQUE (product_id, user_id)
+  );
 `;
 
 // Başlangıç verileri - tablolar boşsa eklenir

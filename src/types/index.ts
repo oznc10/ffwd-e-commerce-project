@@ -73,6 +73,21 @@ export interface OrderWithItems extends Order {
   items: OrderItem[];
 }
 
+// Ürün yorumu
+export interface Review {
+  id: number;
+  product_id: number;
+  user_id: number;
+  rating: number;
+  comment: string;
+  created_at: string;
+}
+
+// Yorum + yorum yapan kullanıcının adı (JOIN ile gelir)
+export interface ReviewWithUser extends Review {
+  user_name: string;
+}
+
 // Session'da tutulan minimal kullanıcı bilgisi
 export interface SessionUser {
   id: number;
