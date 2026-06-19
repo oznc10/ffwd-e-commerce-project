@@ -5,6 +5,7 @@ import { getSession, type SessionData } from "@/lib/session";
 import { Button } from "@/components/ui/button";
 import { LogoutButton } from "@/components/auth/logout-button";
 import CartIcon from "@/components/layout/cart-icon";
+import MobileNav from "@/components/layout/mobile-nav";
 
 export default async function Header() {
   const session = await getSession();
@@ -21,8 +22,8 @@ export default async function Header() {
           TechStore
         </Link>
 
-        {/* Orta: Navigasyon */}
-        <nav className="hidden sm:flex items-center gap-1">
+        {/* Orta: Navigasyon — sadece md ve üstünde görünür */}
+        <nav className="hidden md:flex items-center gap-1">
           <Link
             href="/"
             className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
@@ -37,36 +38,42 @@ export default async function Header() {
           </Link>
         </nav>
 
-        {/* Sağ: Sepet + Kullanıcı alanı */}
+        {/* Sağ: Sepet + Kullanıcı alanı + Hamburger */}
         <div className="flex items-center gap-2">
           {/* Sepet ikonu — item sayısını canlı gösterir */}
           <CartIcon />
 
-          {/* Oturum durumuna göre kullanıcı alanı */}
+          {/* Masaüstü kullanıcı alanı — sadece md ve üstünde görünür */}
           {session.isLoggedIn && session.user ? (
             <LoggedInArea user={session.user} />
           ) : (
             <GuestArea />
           )}
+
+          {/* Mobil hamburger menü — sadece md altında görünür */}
+          <MobileNav
+            isLoggedIn={session.isLoggedIn}
+            user={session.user ?? null}
+          />
         </div>
       </div>
     </header>
   );
 }
 
-// Oturum açmış kullanıcı için alan
+// Oturum açmış kullanıcı için masaüstü alanı
 function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="hidden md:flex items-center gap-2">
       <Link
         href="/profile"
-        className="hidden sm:block rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+        className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
       >
         {user.name}
       </Link>
       <Link
         href="/orders"
-        className="hidden sm:block rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+        className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
       >
         Siparişlerim
       </Link>
@@ -75,10 +82,10 @@ function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
   );
 }
 
-// Oturum açmamış ziyaretçi için alan
+// Oturum açmamış ziyaretçi için masaüstü alanı
 function GuestArea() {
   return (
-    <div className="flex items-center gap-2">
+    <div className="hidden md:flex items-center gap-2">
       <Button variant="ghost" size="sm" asChild>
         <Link href="/login" className="text-gray-300 hover:text-white">
           Giriş Yap
