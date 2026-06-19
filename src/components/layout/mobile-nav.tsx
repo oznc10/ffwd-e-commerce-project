@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LogoutButton } from "@/components/auth/logout-button";
+import ThemeToggle from "@/components/layout/theme-toggle";
 
 interface MobileNavProps {
   isLoggedIn: boolean;
@@ -62,6 +63,14 @@ export default function MobileNav({ isLoggedIn, user }: MobileNavProps) {
             Ürünler
           </Link>
         </nav>
+
+        <Separator />
+
+        {/* Tema değiştirme butonu */}
+        <div className="flex items-center justify-between px-4 py-2">
+          <span className="text-sm font-medium">Tema</span>
+          <ThemeToggle />
+        </div>
 
         <Separator />
 

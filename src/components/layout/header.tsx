@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LogoutButton } from "@/components/auth/logout-button";
 import CartIcon from "@/components/layout/cart-icon";
 import MobileNav from "@/components/layout/mobile-nav";
+import ThemeToggle from "@/components/layout/theme-toggle";
 
 export default async function Header() {
   const session = await getSession();
@@ -40,6 +41,9 @@ export default async function Header() {
 
         {/* Sağ: Sepet + Kullanıcı alanı + Hamburger */}
         <div className="flex items-center gap-2">
+          {/* Tema değiştirme butonu */}
+          <ThemeToggle />
+
           {/* Sepet ikonu — item sayısını canlı gösterir */}
           <CartIcon />
 
