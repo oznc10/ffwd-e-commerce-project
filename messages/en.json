@@ -1,0 +1,16 @@
+{
+  "common": {
+    "siteName": "TechStore",
+    "loading": "Loading..."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out",
+    "orders": "My Orders",
+    "profile": "My Profile"
+  }
+}

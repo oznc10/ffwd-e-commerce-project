@@ -1,0 +1,16 @@
+{
+  "common": {
+    "siteName": "TechStore",
+    "loading": "Yükleniyor..."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "products": "Ürünler",
+    "cart": "Sepet",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
+    "orders": "Siparişlerim",
+    "profile": "Profilim"
+  }
+}
