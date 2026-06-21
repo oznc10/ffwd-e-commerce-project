@@ -1,15 +1,23 @@
 // Site üst navigasyon çubuğu — server component, session durumuna göre içerik gösterir
 import Link from "next/link";
 import { Zap } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { getSession, type SessionData } from "@/lib/session";
 import { Button } from "@/components/ui/button";
 import { LogoutButton } from "@/components/auth/logout-button";
 import CartIcon from "@/components/layout/cart-icon";
 import MobileNav from "@/components/layout/mobile-nav";
 import ThemeToggle from "@/components/layout/theme-toggle";
+import LanguageSwitcher from "@/components/layout/language-switcher";
+
+// next-intl translator tipi — sub-component'lere prop olarak geçilir
+type NavT = Awaited<ReturnType<typeof getTranslations<"nav">>>;
 
 export default async function Header() {
-  const session = await getSession();
+  const [session, t] = await Promise.all([
+    getSession(),
+    getTranslations("nav"),
+  ]);
 
   return (
     <header className="sticky top-0 z-50 bg-gray-900 text-white">
@@ -29,18 +37,21 @@ export default async function Header() {
             href="/"
             className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
           >
-            Ana Sayfa
+            {t("home")}
           </Link>
           <Link
             href="/products"
             className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
           >
-            Ürünler
+            {t("products")}
           </Link>
         </nav>
 
-        {/* Sağ: Sepet + Kullanıcı alanı + Hamburger */}
+        {/* Sağ: Dil + Tema + Sepet + Kullanıcı alanı + Hamburger */}
         <div className="flex items-center gap-2">
+          {/* Dil değiştirme butonu */}
+          <LanguageSwitcher />
+
           {/* Tema değiştirme butonu */}
           <ThemeToggle />
 
@@ -49,9 +60,9 @@ export default async function Header() {
 
           {/* Masaüstü kullanıcı alanı — sadece md ve üstünde görünür */}
           {session.isLoggedIn && session.user ? (
-            <LoggedInArea user={session.user} />
+            <LoggedInArea user={session.user} t={t} />
           ) : (
-            <GuestArea />
+            <GuestArea t={t} />
           )}
 
           {/* Mobil hamburger menü — sadece md altında görünür */}
@@ -66,7 +77,13 @@ export default async function Header() {
 }
 
 // Oturum açmış kullanıcı için masaüstü alanı
-function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
+function LoggedInArea({
+  user,
+  t,
+}: {
+  user: NonNullable<SessionData["user"]>;
+  t: NavT;
+}) {
   return (
     <div className="hidden md:flex items-center gap-2">
       <Link
@@ -79,7 +96,7 @@ function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
         href="/orders"
         className="rounded-md px-3 py-1.5 text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
       >
-        Siparişlerim
+        {t("orders")}
       </Link>
       <LogoutButton />
     </div>
@@ -87,16 +104,16 @@ function LoggedInArea({ user }: { user: NonNullable<SessionData["user"]> }) {
 }
 
 // Oturum açmamış ziyaretçi için masaüstü alanı
-function GuestArea() {
+function GuestArea({ t }: { t: NavT }) {
   return (
     <div className="hidden md:flex items-center gap-2">
       <Button variant="ghost" size="sm" asChild>
         <Link href="/login" className="text-gray-300 hover:text-white">
-          Giriş Yap
+          {t("login")}
         </Link>
       </Button>
       <Button size="sm" asChild>
-        <Link href="/register">Kayıt Ol</Link>
+        <Link href="/register">{t("register")}</Link>
       </Button>
     </div>
   );
