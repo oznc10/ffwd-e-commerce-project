@@ -15,6 +15,7 @@ import AddToCartButton from "@/components/products/add-to-cart-button";
 import RatingSummary from "@/components/reviews/rating-summary";
 import ReviewForm from "@/components/reviews/review-form";
 import ReviewList from "@/components/reviews/review-list";
+import { formatPrice } from "@/lib/utils/format";
 
 // Next.js 16'da params bir Promise; async component ile await edilmeli
 export default async function ProductDetailPage({
@@ -160,11 +161,3 @@ export default async function ProductDetailPage({
   );
 }
 
-// Fiyatı Türk Lirası formatına çevir: 54999 → "54.999 ₺"
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
-}

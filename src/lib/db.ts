@@ -197,7 +197,7 @@ function seedDatabase(database: Database.Database): void {
         "iPad Pro 12.9\", M2 çipi ve Liquid Retina XDR ekranıyla profesyonel içerik üreticileri için güçlü bir araçtır. Apple Pencil 2 ve Magic Keyboard desteğiyle dizüstü bilgisayar deneyimi sunar.",
         28999,
         15,
-        "https://images.unsplash.com/photo-1544244015-0df4512b09f8?w=800",
+        "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=800",
         2,
         0,
       ],

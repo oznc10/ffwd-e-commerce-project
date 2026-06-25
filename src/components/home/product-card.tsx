@@ -11,17 +11,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { formatPrice } from "@/lib/utils/format";
 
 interface ProductCardProps {
   product: ProductWithCategory;
-}
-
-// Fiyatı Türk Lirası formatına çevir: 54999 → "54.999 ₺"
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(price) +
-    " ₺"
-  );
 }
 
 const ProductCard = React.memo(function ProductCard({ product }: ProductCardProps) {

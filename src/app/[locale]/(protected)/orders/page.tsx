@@ -6,14 +6,7 @@ import { getSession } from "@/lib/session";
 import { getUserOrders } from "@/lib/actions/order";
 import { Button } from "@/components/ui/button";
 import type { Order } from "@/types";
-
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
-}
+import { formatPrice } from "@/lib/utils/format";
 
 // Durum badge'i — her statüs için farklı renk
 const STATUS_STYLES: Record<Order["status"], { label: string; className: string }> = {

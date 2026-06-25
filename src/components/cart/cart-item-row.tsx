@@ -8,18 +8,11 @@ import { Minus, Plus, Trash2 } from "lucide-react";
 import type { ProductWithCategory } from "@/types";
 import { useCart } from "@/hooks/use-cart";
 import { Button } from "@/components/ui/button";
+import { formatPrice } from "@/lib/utils/format";
 
 interface CartItemRowProps {
   product: ProductWithCategory;
   quantity: number;
-}
-
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
 }
 
 const CartItemRow = React.memo(function CartItemRow({ product, quantity }: CartItemRowProps) {

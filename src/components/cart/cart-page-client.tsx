@@ -8,19 +8,13 @@ import { useCart } from "@/hooks/use-cart";
 import { getCartProducts, type CartProductItem } from "@/lib/actions/cart";
 import { Button } from "@/components/ui/button";
 import CartItemRow from "@/components/cart/cart-item-row";
-
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
-}
+import { formatPrice } from "@/lib/utils/format";
 
 export default function CartPageClient() {
   const { items, getItemCount } = useCart();
   const [cartProducts, setCartProducts] = useState<CartProductItem[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // items değiştiğinde (ekleme/çıkarma/miktar güncelleme) DB'den ürün detaylarını getir
   useEffect(() => {
@@ -30,8 +24,10 @@ export default function CartPageClient() {
     }
 
     setLoading(true);
+    setError(null);
     getCartProducts(items)
       .then(setCartProducts)
+      .catch(() => setError("Sepet ürünleri yüklenirken bir hata oluştu."))
       .finally(() => setLoading(false));
   }, [items]);
 
@@ -79,6 +75,12 @@ export default function CartPageClient() {
     <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
       {/* Ürün listesi */}
       <div className="flex flex-1 flex-col gap-3">
+        {/* DB hatası varsa uyarı kutusu göster */}
+        {error && (
+          <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            {error}
+          </p>
+        )}
         {cartProducts.map(({ product, quantity }) => (
           <CartItemRow key={product.id} product={product} quantity={quantity} />
         ))}

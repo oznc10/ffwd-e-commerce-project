@@ -28,8 +28,12 @@ export const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  // localStorage okuma tamamlanana kadar false — yazma effect'i bu flag'e bakarak
+  // erken çalışıp boş diziyi kaydetmesini önler (locale değişimi gibi yeniden
+  // mount durumlarında oluşan race condition'ı kapatır)
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // İlk yüklemede localStorage'dan sepeti oku
+  // İlk yüklemede localStorage'dan sepeti oku; okuma bitince isLoaded'ı aç
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -40,12 +44,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       // Bozuk veri varsa sıfırla
       localStorage.removeItem(STORAGE_KEY);
     }
+    setIsLoaded(true);
   }, []);
 
-  // Sepet her değiştiğinde localStorage'a yaz
+  // Sepet her değiştiğinde localStorage'a yaz — ama yalnızca okuma tamamlandıktan sonra
   useEffect(() => {
+    if (!isLoaded) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+  }, [items, isLoaded]);
 
   const addToCart = useCallback((productId: number, quantity = 1) => {
     setItems((prev) => {

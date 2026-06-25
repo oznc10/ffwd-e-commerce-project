@@ -30,19 +30,24 @@ export interface CartProductItem {
 export async function getCartProducts(
   cartItems: { productId: number; quantity: number }[]
 ): Promise<CartProductItem[]> {
-  const db = getDb();
-  const stmt = db.prepare(PRODUCT_SELECT);
-  const result: CartProductItem[] = [];
+  try {
+    const db = getDb();
+    const stmt = db.prepare(PRODUCT_SELECT);
+    const result: CartProductItem[] = [];
 
-  for (const item of cartItems) {
-    const row = stmt.get(item.productId) as RawProductRow | undefined;
-    if (!row) continue; // Silinmiş veya bulunamayan ürünü atla
+    for (const item of cartItems) {
+      const row = stmt.get(item.productId) as RawProductRow | undefined;
+      if (!row) continue; // Silinmiş veya bulunamayan ürünü atla
 
-    result.push({
-      product: { ...row, is_featured: row.is_featured === 1 },
-      quantity: item.quantity,
-    });
+      result.push({
+        product: { ...row, is_featured: row.is_featured === 1 },
+        quantity: item.quantity,
+      });
+    }
+
+    return result;
+  } catch (error) {
+    console.error("[cart] getCartProducts hatası:", error);
+    return [];
   }
-
-  return result;
 }

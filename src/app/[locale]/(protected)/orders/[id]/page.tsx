@@ -11,14 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { Order } from "@/types";
-
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
-}
+import { formatPrice } from "@/lib/utils/format";
 
 const STATUS_STYLES: Record<Order["status"], { label: string; className: string }> = {
   pending:    { label: "Beklemede",      className: "bg-yellow-100 text-yellow-800" },

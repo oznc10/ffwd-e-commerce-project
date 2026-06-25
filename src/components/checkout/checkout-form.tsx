@@ -17,14 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-function formatPrice(price: number): string {
-  return (
-    new Intl.NumberFormat("tr-TR", { maximumFractionDigits: 0 }).format(
-      price
-    ) + " ₺"
-  );
-}
+import { formatPrice } from "@/lib/utils/format";
 
 interface FormState {
   shipping_name: string;
@@ -122,13 +115,19 @@ export default function CheckoutForm() {
     fd.append("card_cvv", form.card_cvv);
     fd.append("cartItems", JSON.stringify(items));
 
-    const result = await createOrderAction(fd);
+    try {
+      const result = await createOrderAction(fd);
 
-    if (result.success && result.orderId) {
-      clearCart();
-      router.push(`/orders/${result.orderId}`);
-    } else {
-      setError(result.error ?? "Sipariş oluşturulamadı");
+      if (result.success && result.orderId) {
+        clearCart();
+        router.push(`/orders/${result.orderId}`);
+      } else {
+        setError(result.error ?? "Sipariş oluşturulamadı");
+        setLoading(false);
+      }
+    } catch {
+      // Ağ hatası veya beklenmeyen server action hatası
+      setError("Sipariş oluşturulurken bir hata oluştu, lütfen tekrar deneyin.");
       setLoading(false);
     }
   }
