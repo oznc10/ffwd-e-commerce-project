@@ -6,7 +6,7 @@
 
 ## 📹 Proje Tanıtım Videosu
 
-[Video Linki](VIDEO_URL_BURAYA)
+[Video Linki](https://www.youtube.com/watch?v=x7mlaNiMTHk)
 
 ## 📖 Proje Hakkında
 
